@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"></head><body><center>
+<h1>
+McStas - A neutron ray-trace simulation package</h1></center>
+McStas is a general tool for simulating neutron scattering instruments
+and experiments. It is actively supported by <a
+href="http://www.fysik.dtu.dk/">DTU Physics</a>, <a
+href="http://www.nbi.dk">NBI KU</a>, <a
+href="http://www.europeanspallationsource.se">ESS</a>, <a href="http://www.psi.ch">PSI</a> and <a href="http://www.ill.eu">ILL</a>.&nbsp;
+<table>
+<tbody><tr>
+<td>
+<p><img src="/pics/v_sample_logo.gif" vspace="1" width="300" height="143" hspace="15" align="LEFT"><font size="-1">Simulated
+scattering from a hollow-cylinder <a href="/documentation/mcdoc/components/samples/V_sample.html">vanadium
+sample</a>. </font></p></td><td>The plot shows the intensity of scattered neutrons (red is
+highest intensity). The sample is at the center of the sphere with the
+neutron beam coming from the left. Clearly seen is the shadowing effect
+of the sample causing a lower intensity opposite the beam. Also seen is
+the effect of the non-symmetric geometry of the sample, causing lower intensity
+directly above and to the side of the sample.<br clear="BOTH"></td></tr></tbody></table>
+<br>
+<br>
+<hr width="100%">
+<center>
+<h2>
+Recent news
+</h2>
+</center>
+<hr>
+<h3>
+November 6th, 2018: McStas user survey 2018
+</h3>
+<p>Dear all,
+
+<p>To assess the current use of McStas, we have put together the below survey for users of our neutron Monte Carlo ray-tracing package.
+
+<p>Using the survey results, we hope to gain insight and statistics on the McStas user community, where it is currently based, which operating systems and computing infrastructures are used, and to what satisfaction the package, support infrastructure and documentation is used. The survey should also give us a clear picture where to focus our future efforts.
+
+<p>We hope you will help us by investing a few minutes in the survey:
+<br><a href="https://www.surveymonkey.com/r/L38RXZG">https://www.surveymonkey.com/r/L38RXZG</a> 
+
+
+<p>On behalf of the McStas team,
+<br>Peter Willendrup
+<hr>
+<h3>
+September 29th, 2018: Release 2.4.1 works OK on macOS 10.14 Mojave
+</h3>
+Dear all,
+
+<p>I can confirm that the latest McStas works fine on the newest macOS
+release, even though the distributed "Check-PL-dependencies" script will report
+both 10.13 and 10.14 as an unsupported macOS releases.
+
+<p>If you need to install our Perl-based tool chain on 10.13 High
+Sierra or 10.14 Mojave, the easiest way is to download an updated version of the above script, get
+it <a
+href="https://github.com/McStasMcXtrace/McCode/blob/master/support/MacOSX/Check-dependencies/Check-PL-dependencies.command">from
+our GitHub</a> (I will also put a copy alongside the existing .tgz for
+download)
+<p>If, after an <i>upgrade</i> to Mojave you get compilation issues
+with the error message
+<pre>mccode-r.h:39:18: fatal error: math.h: No such file or
+directory</pre>
+then please run the following commands in a terminal: <ul>
+  <li><pre>xcode-select --install</pre> - to initiate
+  installation of updated Xcode commandline tools
+  <li><pre>sudo open
+/Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg</pre>
+  - to install the development headerfiles in the usual /usr/include
+  location
+</ul>
+</h3>
+<hr>
+<h3>
+May 18th, 2018: MDANSE 2018
+</h3>
+<p>Does the combination of DFT or classical MD with McStas for modeling experimental data
+sound interesting?
+<p>If so, please consider participating in the <a
+href="https://www.isis.stfc.ac.uk/Pages/MDANSE-2018.aspx">MDANSE
+2018</a> event in Tenerife this fall. Registration closes on May 31st 2018.
+<p><a href="/pics/MDANSE-2018_flyer.jpg" target=_blank><img width=600 src="/pics/MDANSE-2018_flyer.jpg"></a>
+<p>(You can also read more in this a post to <a href="https://mailman2.mcstas.org/pipermail/mcstas-users/2018q2/001253.html">mcstas-users</a>)
+
+<hr>
+<h3>
+April 30th, 2018: Release 2.4.1 works OK on Ubuntu 18.04 + a workaround
+</h3>
+Dear all,
+
+<p>I have tested McStas 2.4.1 with the recent <a href="http://releases.ubuntu.com/18.04/">Ubuntu 18.04 LTS "bionic
+beaver"</a>, and <a href="/download/install_linux/">the usual installation recipe</a> works.
+
+<p>The only found issue so far relates to the behaviour of the
+Perl+PGPLOT <b><tt>mcplot.pl</tt></b> plotter which out of the box fails
+with the error message: "<tt>%giza - ERROR - giza_open_device: Unknown
+device, device not opened</tt>" (see below graphics also).
+<p><a target=_blank href="/pics/mcplot-giza-bug.png"><img width=300 src="/pics/mcplot-giza-bug.png"></a>
+<br>(In fact the problem was known already for Debian testing, see our related <a
+href="https://github.com/McStasMcXtrace/McCode/issues/558">GitHub issue</a>)
+
+<p>The following solutions/workarounds exist:
+<ol>
+  <li><b>Recommended:</b><br> Use the Python-based pyqtgraph plotter
+  instead, i.e. <tt>mcplot</tt> (or <tt>mcplot-pyqtgraph</tt>). This
+  would give you graphics like this:<br>
+  <a target=_blank href="/pics/mcplot-use-pyqtgraph.png"><img width=300 src="/pics/mcplot-use-pyqtgraph.png"></a>
+  <li><b>Configure pgplot/giza for "XWIN" driver:</b><br> Either edit your
+  <tt>/usr/share/mcstas/2.4.1/tools/Perl/perl/mccode_config.perl</tt>
+  replacing <tt>XSERV</tt> with <tt>XWIN</tt> or set the related
+  environment variable in the shell, i.e.<br>
+  <tt>export PGPLOT_DEV=/XWIN</tt><br>
+  The solution will give you this appearance:<br>
+  <a target=_blank href="/pics/mcplot-giza-XWIN.png"><img width=300 src="/pics/mcplot-giza-XWIN.png"></a>
+  <li>
+  <li><b>Force-configure to use the legacy PGPLOT:</b>
+  <br>Use these
+  commands in a shell and get your "normal" PGPLOT window back 
+  <ul>
+    <tt>
+    <li>cd /usr/lib/x86_64-linux-gnu
+    <li>sudo ln -sf ../libpgplot.so libpgplot.so.0
+    <li>sudo ln -sf ../libcpgplot.so libcpgplot.so.0
+    </tt>
+  </ul>
+  The solution will give you this appearance (as usual):<br>
+  <a target=_blank href="/pics/mcplot-modifiedlinks.png"><img width=300 src="/pics/mcplot-modifiedlinks.png"></a>
+</ol>
+
+<hr>
+<h3>
+March 2018: McStas-McXtrace team participates in GPU Hackathon
+</h3>
+<p>As some of you may have already seen via our <a
+href="https://www.facebook.com/McStas/">facebook page</a> or on <a href="https://twitter.com/pwillendrup/status/972037990792028161">twitter</a>, a joint
+McStas-McXtrace team visited the <a
+href="https://www.olcf.ornl.gov/calendar/2018-gpu-hackathons/">2018
+GPU Hackathon in Dresden</a> in March.
+<p> We can not a such claim that the software <i>fully runs</i> on
+NVIDIA GPU's, but we certainly gained knowledge and will investigate
+further. :-)
+<p>The team pariticpating in Dresden were
+<ul>
+  <li>DTU: Peter Willendrup, Jakob Garde, DTU Physics and Giovanni Fevola, DTU Energy
+  <li>ILL: Emmannuel Farhi, ILL Spectroscopy Group / Computing for
+  Science
+  <li>UCPH: Mads Bertelsen, Niels Bohr Institute
+</ul>
+<p>Here is a few photos from the event - and also a <a href="http://media.mcstas.org/Dresden-GPU-hackathon-2018/McStas_McXtrace_final.pdf">PDF from
+the final presentation</a>, put together by Mads Bertelsen,
+University of Copenhagen<br>
+<a target=_blank href="/pics/Dresden-1.jpg"><img width=300 src="/pics/Dresden-1.jpg"></a><a target=_blank href="/pics/Dresden-2.jpg"><img width=300 src="/pics/Dresden-2.jpg"></a><a target=_blank href="/pics/Dresden-3.jpg"><img width=300 src="/pics/Dresden-3.jpg"></a>
+<hr>
+<p><b>Previous news items: </b><a href="/news/2017.html">2017</a>, <a href="/news/2016.html">2016</a>, <a href="/news/2015.html">2015</a>, <a href="/news/2014.html">2014</a>, <a href="/news/2013.html">2013</a>, <a href="/news/2012.html">2012</a>, <a href="/news/2011.html">2011</a>, </b><a href="/news/2010.html">2010</a>, <a href="/news/2009.html">2009</a>, <a href="/news/2008.html">2008</a>, <a href="/news/2007.html">2007</a>, <a href="/news/2006.html">2006</a>, <a href="/news/2005.html">2005</a>, <a href="/news/2004.html">2004</a>, <a href="/news/2003.html">2003</a>,<a href="/news/2002.html">2002</a>, <a href="/news/2001.html">2001</a>, <a href="/news/2000.html">2000</a>, <a href="/news/1999.html">1999</a>,
+<a href="/news/1998.html">1998</a>.
+
+</p></body></html>
